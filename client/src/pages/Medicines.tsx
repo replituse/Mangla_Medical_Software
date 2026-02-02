@@ -39,8 +39,13 @@ function MedicineForm({ onClose }: { onClose: () => void }) {
     }
   });
 
-  function onSubmit(data: InsertMedicine) {
-    mutate(data, {
+  function onSubmit(data: any) {
+    const formattedData = {
+      ...data,
+      purchasePrice: data.purchasePrice.toString(),
+      sellingPrice: data.sellingPrice.toString(),
+    };
+    mutate(formattedData, {
       onSuccess: () => {
         onClose();
         form.reset();
