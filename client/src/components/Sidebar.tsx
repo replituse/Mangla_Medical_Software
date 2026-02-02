@@ -17,7 +17,7 @@ const menuItems = [
   { icon: Pill, label: "Medicines", href: "/medicines" },
   { icon: Users, label: "Customers", href: "/customers" },
   { icon: Truck, label: "Suppliers", href: "/suppliers" },
-  // { icon: FileText, label: "Reports", href: "/reports" },
+  { icon: FileText, label: "Reports", href: "/reports" },
 ];
 
 export function Sidebar() {
