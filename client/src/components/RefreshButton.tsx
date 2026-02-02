@@ -32,7 +32,7 @@ export function RefreshButton() {
     <Button
       variant="outline"
       size="icon"
-      className="fixed top-4 right-4 z-[100] bg-background/80 backdrop-blur-sm shadow-md hover:bg-accent h-10 w-10 rounded-full border-primary/20"
+      className="absolute top-8 right-8 z-[50] bg-background/80 backdrop-blur-sm shadow-sm hover:bg-accent h-10 w-10 rounded-full border-primary/20"
       onClick={handleRefresh}
       disabled={isRefreshing}
       title="Refresh Data"
