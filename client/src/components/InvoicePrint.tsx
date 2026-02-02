@@ -48,14 +48,14 @@ export const InvoicePrint = forwardRef<HTMLDivElement, InvoicePrintProps>(({ inv
           </tr>
         </thead>
         <tbody>
-          {invoice.items.map((item, index) => (
+          {invoice.items?.map((item, index) => (
             <tr key={index} className="border-b border-gray-100">
               <td className="py-3 text-sm">
                 <span className="font-semibold block">{item.medicine?.name}</span>
                 <span className="text-xs text-gray-500">{item.medicine?.category}</span>
               </td>
               <td className="py-3 text-sm font-mono text-gray-600">{item.batchNumber}</td>
-              <td className="py-3 text-sm font-mono text-gray-600">{format(new Date(item.expiryDate), "MM/yy")}</td>
+              <td className="py-3 text-sm font-mono text-gray-600">{item.expiryDate ? format(new Date(item.expiryDate), "MM/yy") : ""}</td>
               <td className="py-3 text-center text-sm">{item.quantity}</td>
               <td className="py-3 text-right text-sm">₹{item.rate}</td>
               <td className="py-3 text-right text-sm font-medium">₹{item.totalAmount}</td>

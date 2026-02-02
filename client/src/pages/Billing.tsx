@@ -84,11 +84,16 @@ export default function Billing() {
 
     createInvoice(payload, {
       onSuccess: (data) => {
-        setLastInvoice(data); // Assuming backend returns created invoice with details
-        setShowSuccess(true);
-        setCart([]);
-        setCustomerName("");
-        setCustomerMobile("");
+        // Fetch the full invoice details including items for the success modal
+        fetch(`/api/invoices/${data.id}`)
+          .then(res => res.json())
+          .then(fullInvoice => {
+            setLastInvoice(fullInvoice);
+            setShowSuccess(true);
+            setCart([]);
+            setCustomerName("");
+            setCustomerMobile("");
+          });
       },
     });
   };
