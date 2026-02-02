@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { Sidebar } from "@/components/Sidebar";
+import { RefreshButton } from "@/components/RefreshButton";
 import { useMedicines } from "@/hooks/use-medicines";
 import { useCreateInvoice } from "@/hooks/use-invoices";
 import { Button } from "@/components/ui/button";
@@ -101,6 +102,7 @@ export default function Billing() {
   return (
     <div className="flex h-screen bg-background font-body overflow-hidden">
       <Sidebar />
+      <RefreshButton />
       <main className="flex-1 flex flex-col md:flex-row h-full overflow-hidden">
         
         {/* LEFT: Medicine Selection */}

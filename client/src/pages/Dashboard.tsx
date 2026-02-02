@@ -1,4 +1,5 @@
 import { Sidebar } from "@/components/Sidebar";
+import { RefreshButton } from "@/components/RefreshButton";
 import { DashboardStats } from "@/components/DashboardStats";
 import { useAuth } from "@/hooks/use-auth";
 import { useInvoices } from "@/hooks/use-invoices";
@@ -49,6 +50,7 @@ export default function Dashboard() {
   return (
     <div className="flex min-h-screen bg-background font-body">
       <Sidebar />
+      <RefreshButton />
       <main className="flex-1 p-8 overflow-y-auto">
         <div className="max-w-7xl mx-auto space-y-8">
           

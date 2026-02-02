@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Sidebar } from "@/components/Sidebar";
+import { RefreshButton } from "@/components/RefreshButton";
 import { useSuppliers, useCreateSupplier } from "@/hooks/use-suppliers";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -95,6 +96,7 @@ export default function Suppliers() {
   return (
     <div className="flex min-h-screen bg-background font-body">
       <Sidebar />
+      <RefreshButton />
       <main className="flex-1 p-8 overflow-y-auto">
         <div className="max-w-7xl mx-auto space-y-8">
           

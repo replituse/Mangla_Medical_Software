@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Sidebar } from "@/components/Sidebar";
+import { RefreshButton } from "@/components/RefreshButton";
 import { useMedicines, useCreateMedicine, useDeleteMedicine } from "@/hooks/use-medicines";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -180,6 +181,7 @@ export default function Medicines() {
   return (
     <div className="flex min-h-screen bg-background font-body">
       <Sidebar />
+      <RefreshButton />
       <main className="flex-1 p-8 overflow-y-auto">
         <div className="max-w-7xl mx-auto space-y-8">
           

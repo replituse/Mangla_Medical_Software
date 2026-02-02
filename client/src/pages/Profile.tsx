@@ -1,4 +1,6 @@
 import { useAuth } from "@/hooks/use-auth";
+import { Sidebar } from "@/components/Sidebar";
+import { RefreshButton } from "@/components/RefreshButton";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -16,7 +18,6 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Loader2, User as UserIcon } from "lucide-react";
-import { Sidebar } from "@/components/Sidebar";
 
 const profileSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
@@ -71,6 +72,7 @@ export default function Profile() {
   return (
     <div className="flex h-screen bg-background">
       <Sidebar />
+      <RefreshButton />
       <main className="flex-1 overflow-y-auto p-8">
         <div className="max-w-2xl mx-auto">
           <h1 className="text-3xl font-bold mb-8">User Profile</h1>

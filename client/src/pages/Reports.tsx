@@ -1,5 +1,6 @@
 import { useInvoices, useInvoice } from "@/hooks/use-invoices";
 import { Sidebar } from "@/components/Sidebar";
+import { RefreshButton } from "@/components/RefreshButton";
 import { format, isWithinInterval, startOfDay, endOfDay, parseISO } from "date-fns";
 import { 
   FileText, 
@@ -82,6 +83,7 @@ export default function Reports() {
   return (
     <div className="flex h-screen bg-background font-body">
       <Sidebar />
+      <RefreshButton />
       <main className="flex-1 p-8 overflow-y-auto">
         <div className="max-w-7xl mx-auto space-y-8">
           <div className="flex justify-between items-center">
