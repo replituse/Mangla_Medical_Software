@@ -47,11 +47,13 @@ export default function Profile() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
       });
+      
+      const data = await response.json().catch(() => ({}));
+      
       if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.message || "Failed to update profile");
+        throw new Error(data.message || "Failed to update profile");
       }
-      return response.json();
+      return data;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/auth/user"] });

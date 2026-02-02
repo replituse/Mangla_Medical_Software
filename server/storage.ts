@@ -236,7 +236,8 @@ export class DatabaseStorage implements IStorage {
 
   async upsertUser(userData: any): Promise<any> {
     const { id, ...updates } = userData;
-    const [user] = await db
+    // Try to update first
+    const [updatedUser] = await db
       .update(users)
       .set({
         ...updates,
@@ -244,7 +245,21 @@ export class DatabaseStorage implements IStorage {
       })
       .where(eq(users.id, id))
       .returning();
-    return user;
+    
+    if (updatedUser) return updatedUser;
+
+    // If no user updated (shouldn't happen for logged in users, but safety first), 
+    // we don't want to insert with a random ID if we have one, but for Replit Auth, 
+    // the ID is fixed from the provider.
+    const [insertedUser] = await db
+      .insert(users)
+      .values({ id, ...updates })
+      .onConflictDoUpdate({
+        target: users.id,
+        set: { ...updates, updatedAt: new Date() }
+      })
+      .returning();
+    return insertedUser;
   }
 }
 
