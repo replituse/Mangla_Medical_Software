@@ -18,7 +18,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Loader2, User as UserIcon } from "lucide-react";
 import { Sidebar } from "@/components/Sidebar";
 
-const profileSchema = z.zod.object({
+const profileSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
   lastName: z.string().min(1, "Last name is required"),
   email: z.string().email("Invalid email address"),

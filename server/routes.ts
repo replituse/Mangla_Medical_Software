@@ -119,15 +119,16 @@ export async function registerRoutes(
       const grandTotal = subtotal + gstTotal - (input.discount || 0);
 
       // 3. Create Invoice
-      const invoice = await storage.createInvoice({
-        invoiceNumber: `INV-${Date.now()}`,
+      const invoiceData: any = {
         customerId: customer.id,
         subtotal: subtotal.toString(),
         gstTotal: gstTotal.toString(),
         discount: (input.discount || 0).toString(),
         grandTotal: grandTotal.toString(),
         paymentMode: input.paymentMode || 'Cash',
-      }, invoiceItemsData);
+      };
+      
+      const invoice = await storage.createInvoice(invoiceData, invoiceItemsData);
 
       res.status(201).json(invoice);
 
