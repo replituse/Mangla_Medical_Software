@@ -47,7 +47,10 @@ export default function Profile() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
       });
-      if (!response.ok) throw new Error("Failed to update profile");
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.message || "Failed to update profile");
+      }
       return response.json();
     },
     onSuccess: () => {

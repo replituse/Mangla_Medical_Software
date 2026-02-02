@@ -164,9 +164,12 @@ export async function registerRoutes(
       return res.status(401).json({ message: "Unauthorized" });
     }
     const user = req.user as any;
+    const { firstName, lastName, email } = req.body;
     const updated = await storage.upsertUser({
       id: user.id,
-      ...req.body,
+      firstName,
+      lastName,
+      email,
     });
     res.json(updated);
   });
