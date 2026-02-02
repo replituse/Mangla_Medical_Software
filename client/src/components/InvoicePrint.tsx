@@ -30,8 +30,8 @@ export const InvoicePrint = forwardRef<HTMLDivElement, InvoicePrintProps>(({ inv
       {/* Customer Details */}
       <div className="mb-8 p-4 bg-gray-50 rounded-lg border border-gray-100">
         <h3 className="text-sm font-bold text-gray-500 uppercase tracking-wide mb-2">Bill To</h3>
-        <p className="font-bold text-lg">{invoice.customer?.name || invoice.customerName || "Guest Customer"}</p>
-        <p className="text-gray-600">{invoice.customer?.mobileNumber || invoice.customerMobile}</p>
+        <p className="font-bold text-lg">{invoice.customer?.name || "Guest Customer"}</p>
+        <p className="text-gray-600">{invoice.customer?.mobileNumber}</p>
         {invoice.customer?.address && <p className="text-gray-600">{invoice.customer.address}</p>}
       </div>
 
