@@ -158,8 +158,22 @@ export class DatabaseStorage implements IStorage {
     });
   }
 
-  async getInvoices(): Promise<Invoice[]> {
-    return await db.select().from(invoices).orderBy(desc(invoices.date));
+  async getInvoices(): Promise<any[]> {
+    const allInvoices = await db.select().from(invoices).orderBy(desc(invoices.date));
+    const results = [];
+    
+    for (const invoice of allInvoices) {
+      const [customer] = invoice.customerId 
+        ? await db.select().from(customers).where(eq(customers.id, invoice.customerId))
+        : [null];
+      
+      results.push({
+        ...invoice,
+        customerName: customer?.name || "Walk-in Customer"
+      });
+    }
+    
+    return results;
   }
 
   async getInvoice(id: number): Promise<InvoiceWithDetails | undefined> {
@@ -177,7 +191,12 @@ export class DatabaseStorage implements IStorage {
       ? await db.select().from(customers).where(eq(customers.id, invoice.customerId))
       : [null];
 
-    return { ...invoice, items, customer: customer || null };
+    return { 
+      ...invoice, 
+      items, 
+      customer: customer || null,
+      customerName: customer?.name || "Walk-in Customer"
+    };
   }
 
   // Stats

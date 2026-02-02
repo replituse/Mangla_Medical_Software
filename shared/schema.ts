@@ -140,6 +140,7 @@ export type CreateInvoiceRequest = {
 export type InvoiceWithDetails = Invoice & {
   customer: Customer | null;
   items: (InvoiceItem & { medicine: Medicine })[];
+  customerName?: string; // For compatibility
 };
 
 export type DashboardStats = {

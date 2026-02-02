@@ -60,7 +60,7 @@ export default function Dashboard() {
                   ) : invoices?.slice(0, 5).map((inv) => (
                     <tr key={inv.id} className="hover:bg-muted/30 transition-colors">
                       <td className="px-6 py-4 font-mono font-medium">{inv.invoiceNumber}</td>
-                      <td className="px-6 py-4 text-foreground font-medium">{inv.customerName || "Walk-in Customer"}</td>
+                      <td className="px-6 py-4 text-foreground font-medium">{(inv as any).customerName || "Walk-in Customer"}</td>
                       <td className="px-6 py-4 text-muted-foreground">{format(new Date(inv.date || new Date()), "MMM dd, yyyy")}</td>
                       <td className="px-6 py-4 text-right font-bold">₹{inv.grandTotal}</td>
                       <td className="px-6 py-4 text-center">

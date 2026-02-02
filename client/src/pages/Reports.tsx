@@ -31,7 +31,7 @@ export default function Reports() {
   const filteredInvoices = useMemo(() => {
     if (!invoices) return [];
     
-    return invoices.filter((inv) => {
+    return invoices.filter((inv: any) => {
       const matchesSearch = 
         inv.invoiceNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
         (inv.customerName || "Walk-in Customer").toLowerCase().includes(searchTerm.toLowerCase());
@@ -128,7 +128,7 @@ export default function Reports() {
                 <tbody className="divide-y divide-border">
                   {isLoading ? (
                     <tr><td colSpan={6} className="p-12 text-center text-muted-foreground">Loading reports...</td></tr>
-                  ) : filteredInvoices.map((inv) => (
+                  ) : filteredInvoices.map((inv: any) => (
                     <tr key={inv.id} className="hover:bg-muted/30 transition-colors">
                       <td className="px-6 py-4 font-mono font-medium text-primary">{inv.invoiceNumber}</td>
                       <td className="px-6 py-4 text-foreground font-medium">{inv.customerName || "Walk-in Customer"}</td>
