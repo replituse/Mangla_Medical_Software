@@ -1,4 +1,4 @@
-import { useInvoices } from "@/hooks/use-invoices";
+import { useInvoices, useInvoice } from "@/hooks/use-invoices";
 import { Sidebar } from "@/components/Sidebar";
 import { format, isWithinInterval, startOfDay, endOfDay, parseISO } from "date-fns";
 import { 
@@ -7,9 +7,10 @@ import {
   Printer, 
   Search, 
   Calendar as CalendarIcon,
-  Filter
+  Filter,
+  Eye
 } from "lucide-react";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -20,13 +21,28 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
+import { InvoiceTemplate } from "@/components/InvoiceTemplate";
+import { useReactToPrint } from "react-to-print";
 
 export default function Reports() {
   const { data: invoices, isLoading } = useInvoices();
   const [searchTerm, setSearchTerm] = useState("");
   const [dateFilter, setDateFilter] = useState<"all" | "today" | "month" | "year">("all");
+  const [selectedInvoiceId, setSelectedInvoiceId] = useState<number | null>(null);
+  const { data: selectedInvoice, isLoading: isLoadingInvoice } = useInvoice(selectedInvoiceId);
   const { toast } = useToast();
+  const printRef = useRef<HTMLDivElement>(null);
+
+  const handlePrint = useReactToPrint({
+    contentRef: printRef,
+  });
 
   const filteredInvoices = useMemo(() => {
     if (!invoices) return [];
@@ -52,15 +68,15 @@ export default function Reports() {
     });
   }, [invoices, searchTerm, dateFilter]);
 
-  const handlePrint = (invoice: any) => {
-    toast({ title: "Printing", description: `Preparing invoice ${invoice.invoiceNumber} for printing...` });
-    // In a real app, this would trigger the react-to-print or similar
-    window.print();
+  const handlePrintAction = (invoiceId: number) => {
+    setSelectedInvoiceId(invoiceId);
+    setTimeout(() => {
+      handlePrint();
+    }, 500);
   };
 
   const handleDownload = (invoice: any) => {
     toast({ title: "Downloading", description: `Downloading invoice ${invoice.invoiceNumber} as PDF...` });
-    // In a real app, this would generate and download a PDF
   };
 
   return (
@@ -148,7 +164,15 @@ export default function Reports() {
                           size="icon" 
                           variant="ghost" 
                           className="h-8 w-8 text-primary hover:bg-primary/10"
-                          onClick={() => handlePrint(inv)}
+                          onClick={() => setSelectedInvoiceId(inv.id)}
+                        >
+                          <Eye className="h-4 w-4" />
+                        </Button>
+                        <Button 
+                          size="icon" 
+                          variant="ghost" 
+                          className="h-8 w-8 text-primary hover:bg-primary/10"
+                          onClick={() => handlePrintAction(inv.id)}
                         >
                           <Printer className="h-4 w-4" />
                         </Button>
@@ -175,6 +199,33 @@ export default function Reports() {
             </div>
           </div>
         </div>
+
+        <Dialog open={!!selectedInvoiceId} onOpenChange={(open) => !open && setSelectedInvoiceId(null)}>
+          <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+            <DialogHeader>
+              <DialogTitle className="flex justify-between items-center">
+                <span>Invoice Preview</span>
+                <div className="flex gap-2">
+                  <Button onClick={() => handlePrint()} disabled={isLoadingInvoice}>
+                    <Printer className="h-4 w-4 mr-2" />
+                    Print
+                  </Button>
+                </div>
+              </DialogTitle>
+            </DialogHeader>
+            <div className="bg-slate-100 p-8 rounded-lg overflow-x-auto">
+              <div ref={printRef}>
+                {selectedInvoice ? (
+                  <InvoiceTemplate invoice={selectedInvoice} />
+                ) : (
+                  <div className="h-96 flex items-center justify-center text-muted-foreground">
+                    Loading invoice details...
+                  </div>
+                )}
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
       </main>
     </div>
   );

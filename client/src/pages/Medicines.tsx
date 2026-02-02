@@ -44,6 +44,7 @@ function MedicineForm({ onClose }: { onClose: () => void }) {
       ...data,
       purchasePrice: data.purchasePrice.toString(),
       sellingPrice: data.sellingPrice.toString(),
+      expiryDate: data.expiryDate, // Ensure this is a string
     };
     mutate(formattedData, {
       onSuccess: () => {

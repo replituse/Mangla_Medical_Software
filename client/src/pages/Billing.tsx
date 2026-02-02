@@ -9,7 +9,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Medicine } from "@shared/schema";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useReactToPrint } from "react-to-print";
-import { InvoicePrint } from "@/components/InvoicePrint";
+import { InvoiceTemplate } from "@/components/InvoiceTemplate";
 
 type CartItem = Medicine & { quantity: number; total: number };
 
@@ -269,7 +269,7 @@ export default function Billing() {
              
              {/* Hidden Print Component */}
              <div style={{ display: 'none' }}>
-               {lastInvoice && <InvoicePrint ref={printRef} invoice={lastInvoice} />}
+               {lastInvoice && <InvoiceTemplate ref={printRef as any} invoice={lastInvoice} />}
              </div>
           </div>
         </DialogContent>
