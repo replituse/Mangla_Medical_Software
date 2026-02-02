@@ -157,6 +157,19 @@ export async function registerRoutes(
     res.json(stats);
   });
 
+  // === USER PROFILE ===
+  app.put("/api/user/profile", async (req, res) => {
+    if (!req.isAuthenticated()) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+    const user = req.user as any;
+    const updated = await storage.upsertUser({
+      id: user.id,
+      ...req.body,
+    });
+    res.json(updated);
+  });
+
   // Seed Data
   if (process.env.NODE_ENV !== "production") {
     await seedDatabase();

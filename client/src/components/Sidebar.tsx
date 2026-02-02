@@ -57,23 +57,25 @@ export function Sidebar() {
       </div>
 
       <div className="border-t border-border p-4 bg-muted/20">
-        <div className="flex items-center mb-4 px-2">
-          <div className="h-10 w-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold overflow-hidden">
-            {user?.profileImageUrl ? (
-              <img src={user.profileImageUrl} alt="Profile" className="h-full w-full object-cover" />
-            ) : (
-              user?.firstName?.charAt(0) || "U"
-            )}
+        <Link href="/profile">
+          <div className="flex items-center mb-4 px-2 cursor-pointer hover:bg-primary/5 rounded-lg p-2 transition-colors">
+            <div className="h-10 w-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold overflow-hidden">
+              {user?.profileImageUrl ? (
+                <img src={user.profileImageUrl} alt="Profile" className="h-full w-full object-cover" />
+              ) : (
+                user?.firstName?.charAt(0) || "U"
+              )}
+            </div>
+            <div className="ml-3 overflow-hidden">
+              <p className="text-sm font-semibold truncate text-foreground">
+                {user?.firstName} {user?.lastName}
+              </p>
+              <p className="text-xs text-muted-foreground truncate">
+                {user?.email}
+              </p>
+            </div>
           </div>
-          <div className="ml-3 overflow-hidden">
-            <p className="text-sm font-semibold truncate text-foreground">
-              {user?.firstName} {user?.lastName}
-            </p>
-            <p className="text-xs text-muted-foreground truncate">
-              {user?.email}
-            </p>
-          </div>
-        </div>
+        </Link>
         <button
           onClick={() => logout()}
           className="flex w-full items-center justify-center px-4 py-2 text-sm font-medium text-destructive bg-destructive/10 rounded-lg hover:bg-destructive hover:text-destructive-foreground transition-colors"

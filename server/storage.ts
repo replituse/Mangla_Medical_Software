@@ -45,6 +45,9 @@ export interface IStorage {
 
   // Stats
   getDashboardStats(): Promise<DashboardStats>;
+
+  // Users
+  upsertUser(user: any): Promise<any>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -206,6 +209,21 @@ export class DatabaseStorage implements IStorage {
       todaysSales: Number(sales.total || 0),
       totalCustomers: Number(totalCustomers.count),
     };
+  }
+
+  async upsertUser(userData: any): Promise<any> {
+    const [user] = await db
+      .insert(users)
+      .values(userData)
+      .onConflictDoUpdate({
+        target: users.id,
+        set: {
+          ...userData,
+          updatedAt: new Date(),
+        },
+      })
+      .returning();
+    return user;
   }
 }
 

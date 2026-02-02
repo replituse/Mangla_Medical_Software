@@ -12,6 +12,7 @@ import Medicines from "@/pages/Medicines";
 import Billing from "@/pages/Billing";
 import Customers from "@/pages/Customers";
 import Suppliers from "@/pages/Suppliers";
+import Profile from "@/pages/Profile";
 import Login from "@/pages/Login";
 import NotFound from "@/pages/not-found";
 
@@ -41,6 +42,7 @@ function Router() {
       <Route path="/billing" component={() => <PrivateRoute component={Billing} />} />
       <Route path="/customers" component={() => <PrivateRoute component={Customers} />} />
       <Route path="/suppliers" component={() => <PrivateRoute component={Suppliers} />} />
+      <Route path="/profile" component={() => <PrivateRoute component={Profile} />} />
       <Route path="/login" component={Login} />
       <Route component={NotFound} />
     </Switch>
